@@ -39,6 +39,13 @@
                         <a class="navbar-brand" href="#">AskFmClone</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if user.is_authenticated %}
+                            <li><a href="#">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'login_view' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
