@@ -13,14 +13,15 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-# dj-database url module for setting up databases
-import dj_database_url
-
 BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
 )
 
-APPS_DIR = os.path.join('askfmclone')
+APPS_DIR = os.path.join(BASE_DIR, 'askfmclone')
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,12 +29,6 @@ APPS_DIR = os.path.join('askfmclone')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7$d9c4gf#)csyxewx48(!)ygq*iy%%d30m$2o=1*wa5kdc)%j2'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -78,17 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = dict()
-
-DATABASES['default'] = dj_database_url.config(
-    default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
-    conn_max_age=500
-)
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -103,14 +91,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(APPS_DIR, 'static')]
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
