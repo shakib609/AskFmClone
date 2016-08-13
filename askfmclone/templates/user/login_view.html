@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+<!-- Disabling navbar on Login Page-->
+{% block navbar %}
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="page-header text-center">
+            <h1><a href="/">AskFmClone</a></h1>
+        </div>
+        <form method="post">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert
+                alert-{{ message.tags }} alert-dismissible"
+                     role="alert">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="next"
+                   value="{% if next %}{{ next }}{% else %}/{% endif %}">
+            {{ form | bootstrap }}
+            <div class="form-group">
+                <input type="submit"
+                       class="btn btn-primary col-xs-12"
+                       value="Login"/>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

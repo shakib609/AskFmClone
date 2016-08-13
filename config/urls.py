@@ -16,9 +16,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-
     # Login/Logout
-    url(r'^login', 'askfmclone.user.views.login', name='login_view'),
-    url(r'^logout', 'askfmclone.user.views.logout', name='logout_view'),
+    url(r'^login/$',
+        'askfmclone.user.views.login_view',
+        name='login_view'),
+    url(r'^logout/$',
+        'askfmclone.user.views.logout_view',
+        name='logout_view'),
+
+    # Admin
+    url(r'^admin/', include(admin.site.urls)),
 ]
