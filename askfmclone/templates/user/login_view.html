@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load staticfiles %}
 
 <!-- Disabling navbar on Login Page-->
 {% block navbar %}
@@ -18,12 +19,15 @@
             <input type="hidden" name="next"
                    value="{% if next %}{{ next }}{% else %}/{% endif %}">
             <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username | add_class:"form-control" }}
+                {{ form.username_or_email | add_class:"form-control" | attr:"placeholder:Username or Email" | attr:"required" }}
             </div>
             <div class="form-group">
-                {{ form.password.label_tag }}
-                {{ form.password | add_class:"form-control" }}
+                {{ form.password | add_class:"form-control" | attr:"placeholder:Password" | attr:"required" }}
+            </div>
+            <div class="checkbox">
+                <label for="show_pass">
+                    <input type="checkbox" id="show_pass"> Show Password?
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit"
@@ -32,8 +36,13 @@
             </div>
         </form>
         <hr><hr>
-        <p>Don't have an account?
-        <a href="{% url 'registration_view' %}">Sign Up</a>.</p>
+        <p>New here? <a href="{% url 'registration_view' %}">
+            Register Now</a>.</p>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/show_pass.js' %}"></script>
 {% endblock %}

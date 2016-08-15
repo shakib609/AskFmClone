@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
+import re
+
 from .forms import LoginForm, RegistrationForm
 
 
@@ -12,8 +14,14 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            username_or_email = form.cleaned_data['username_or_email']
+            if re.compile(r'@').search(username_or_email):
+                email = username_or_email
+                username = User.objects.filter(email=email).first().username
+            else:
+                username = username_or_email
             user = authenticate(
-                       username=form.cleaned_data['username'],
+                       username=username,
                        password=form.cleaned_data['password']
                    )
             if user is not None and user.is_active:

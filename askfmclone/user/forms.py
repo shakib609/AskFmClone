@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(
-                   max_length=20,
-                   label='Username')
+    username_or_email = forms.CharField(
+                            max_length=20,
+                            label='Username or Email')
     password = forms.CharField(
                    widget=forms.PasswordInput,
+                   label='Password',
                    max_length=25,
-                   min_length=6)
+                   min_length=6,)
 
 
 class RegistrationForm(forms.Form):
@@ -52,12 +53,6 @@ class RegistrationForm(forms.Form):
                         25, 'Password must contain less than 25 characters.'),
                    ]
                )
-    password_confirm = forms.CharField(
-                           widget=forms.PasswordInput,
-                           max_length=25,
-                           required=True,
-                           label='Confirm Password'
-                       )
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
