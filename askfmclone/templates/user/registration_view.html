@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 
-<!-- Disabling navbar on Login Page-->
+<!-- Empty Navbar -->
 {% block navbar %}
 {% endblock %}
+
 
 {% block page_content %}
 <div class="row">
@@ -17,23 +18,24 @@
             {% csrf_token %}
             <input type="hidden" name="next"
                    value="{% if next %}{{ next }}{% else %}/{% endif %}">
-            <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username | add_class:"form-control" }}
+            {% for field in form %}
+            <div class="form-group
+                        {% if field.errors %}has-error{% endif %}">
+                <label for="{{ field.auto_id }}" class="control-label">
+                    {{ field.label }}
+                </label>
+                {{ field | add_class:"form-control" }}
             </div>
-            <div class="form-group">
-                {{ form.password.label_tag }}
-                {{ form.password | add_class:"form-control" }}
-            </div>
+            {% endfor %}
             <div class="form-group">
                 <input type="submit"
                        class="btn btn-primary col-xs-12"
-                       value="Login"/>
+                       value="Sign Up"/>
             </div>
         </form>
         <hr><hr>
-        <p>Don't have an account?
-        <a href="{% url 'registration_view' %}">Sign Up</a>.</p>
+        <p>Already have an account?
+        <a href="{% url 'login_view' %}">Login</a>.</p>
     </div>
 </div>
 {% endblock %}

@@ -1,8 +1,9 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
 
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 
 def login_view(request):
@@ -31,3 +32,30 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'Logged out successfully!')
     return redirect('/')
+
+
+def registration_view(request):
+    if request.user.is_authenticated():
+        return redirect('/')
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = User.objects.create_user(
+                        username=username,
+                        email=email,
+                        password=password
+                   )
+            user = authenticate(
+                        username=username, password=password
+                   )
+            login(request, user)
+            messages.success(
+                request, 'Your Account has been created successfully.')
+            return redirect('/')
+    else:
+        form = RegistrationForm()
+    return render(request, 'user/registration_view.html', {'form': form})

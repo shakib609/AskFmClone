@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'askfmclone.question',
-    'bootstrapform'
+    'widget_tweaks'
 )
 
 MIDDLEWARE_CLASSES = (
