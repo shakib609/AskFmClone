@@ -1,6 +1,7 @@
 from django import forms
 from django.core import validators
 from django.contrib.auth.models import User
+from django.utils.html import format_html
 
 
 class LoginForm(forms.Form):
@@ -69,8 +70,10 @@ class RegistrationForm(forms.Form):
             users = User.objects.filter(username=username)
             if len(users):
                 raise forms.ValidationError(
-                        '{} is not available. Choose something else.'.format(
-                                                                    username))
+                        format_html(
+                            '<strong>{}</strong> is not available. Choose something else.'.format(username)
+                        )
+                      )
         return username
 
     def clean_email(self):
@@ -80,8 +83,10 @@ class RegistrationForm(forms.Form):
             users = User.objects.filter(email=email)
             if len(users):
                 raise forms.ValidationError(
-                        '{} is already associated to another account.'.format(
-                                                                        email))
+                        format_html(
+                            '<strong>{}</strong> is already associated to another account.'.format(email)
+                        )
+                      )
         return email
 
     def clean(self):

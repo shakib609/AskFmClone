@@ -13,11 +13,10 @@
             <h1><a href="/">AskFmClone</a></h1>
         </div>
         <form method="post">
+            <h4 class="text-center">Login</h4>
             {% include 'flash_messages.html' %}
             {% include 'form_errors.html' %}
             {% csrf_token %}
-            <input type="hidden" name="next"
-                   value="{% if next %}{{ next }}{% else %}/{% endif %}">
             <div class="form-group">
                 {{ form.username_or_email | add_class:"form-control" | attr:"placeholder:Username or Email" | attr:"required" }}
             </div>
@@ -36,7 +35,7 @@
             </div>
         </form>
         <hr><hr>
-        <p>New here? <a href="{% url 'registration_view' %}">
+        <p>New here? <a href="{% url 'auth:registration_view' %}">
             Register Now</a>.</p>
     </div>
 </div>

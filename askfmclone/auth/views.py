@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -27,24 +28,26 @@ def login_view(request):
             if user is not None and user.is_active:
                 # TODO: Improve here
                 login(request, user)
-                next_page = request.POST['next'] or '/'
+                next_page = request.GET.get(
+                                'next') or reverse('askfm:my_profile_view')
                 messages.success(request, 'Logged in Successfully!')
                 return redirect(next_page)
             messages.error(request, 'Wrong username or password',
                            extra_tags='danger')
     form = LoginForm()
-    return render(request, 'user/login_view.html', {'form': form})
+    return render(request, 'auth/login_view.html', {'form': form})
 
 
 def logout_view(request):
     logout(request)
     messages.success(request, 'Logged out successfully!')
-    return redirect('/')
+    return redirect(reverse('auth:login_view'))
 
 
 def registration_view(request):
+    next_page = request.GET.get('next') or reverse('askfm:my_profile_view')
     if request.user.is_authenticated():
-        return redirect('/')
+        return redirect(next_page)
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -63,7 +66,7 @@ def registration_view(request):
             login(request, user)
             messages.success(
                 request, 'Your Account has been created successfully.')
-            return redirect('/')
+            return redirect(next_page)
     else:
         form = RegistrationForm()
-    return render(request, 'user/registration_view.html', {'form': form})
+    return render(request, 'auth/registration_view.html', {'form': form})

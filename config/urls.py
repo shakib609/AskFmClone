@@ -16,17 +16,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    # Login/Logout
-    url(r'^login/$',
-        'askfmclone.user.views.login_view',
-        name='login_view'),
-    url(r'^logout/$',
-        'askfmclone.user.views.logout_view',
-        name='logout_view'),
-    url(r'^register/$',
-        'askfmclone.user.views.registration_view',
-        name='registration_view'),
 
     # Admin
     url(r'^admin/', include(admin.site.urls)),
+
+    # Auth
+    url(r'^auth/', include('askfmclone.auth.urls', namespace='auth')),
+
+
+    # askfm app
+    url(r'^', include('askfmclone.askfm.urls', namespace='askfm')),
 ]

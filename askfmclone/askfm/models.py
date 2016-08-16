@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Question(models.Model):
@@ -8,13 +9,14 @@ class Question(models.Model):
                                  related_name='asked_to_questions')
     asked_by = models.ForeignKey(User, default=None, null=True,
                                  related_name='asked_by_questions')
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text[:40]
 
 
 class Answer(models.Model):
-    text = models.TextField(default=None, null=True)
+    text = models.TextField(default=None)
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -15,22 +15,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Answer',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
-                ('text', models.TextField(default=None)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
+                ('text', models.TextField(null=True, default=None)),
             ],
         ),
         migrations.CreateModel(
             name='Question',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
                 ('text', models.CharField(max_length=300, default=None)),
-                ('asked_by', models.OneToOneField(to=settings.AUTH_USER_MODEL, related_name='asking_user', default=None)),
-                ('asked_to', models.OneToOneField(to=settings.AUTH_USER_MODEL, related_name='asked_user')),
+                ('asked_by', models.ForeignKey(related_name='asked_by_questions', to=settings.AUTH_USER_MODEL, default=None, null=True)),
+                ('asked_to', models.ForeignKey(related_name='asked_to_questions', to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.OneToOneField(to='question.Question'),
+            field=models.OneToOneField(to='askfm.Question'),
         ),
     ]

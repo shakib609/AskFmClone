@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ username }} | {{ block.super }}
+{% endblock %}
+
+{% block page_content %}
+{% include 'flash_messages.html' %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="page-header text-center">
+            <h2>{{ username }}</h1>
+            <p><a href="#" class="btn btn-primary">
+                Ask Something
+            </a></p>
+        </div>
+
+        <dl>
+            {% for question in answered_questions %}
+            <dt>{{ question.text }}</dt>
+            <dd>{{ question.answer }}</dd>
+            {% endfor %}
+        </dl>
+    </div>
+</div>
+{% endblock %}

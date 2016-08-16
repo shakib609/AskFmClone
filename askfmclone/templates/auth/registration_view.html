@@ -14,21 +14,22 @@
             <h1><a href="/">AskFmClone</a></h1>
         </div>
         <form method="post">
-            <h3 class="text-center"><b>Register Now!</b></h3>
+            <h4 class="text-center">Register Now!</h4>
             {% include 'flash_messages.html' %}
             {% include 'form_errors.html' %}
             {% csrf_token %}
-            <input type="hidden" name="next"
-                   value="{% if next %}{{ next }}{% else %}/{% endif %}">
-            {% for field in form %}
             <div class="form-group
-                        {% if field.errors %}has-error{% endif %}">
-                <label for="{{ field.auto_id }}" class="control-label">
-                    {{ field.label }}
-                </label>
-                {{ field | add_class:"form-control" | attr:"required" }}
+                        {% if form.username.errors %}has-error{% endif %}">
+                {% render_field form.username class="form-control" required="" placeholder="Username" %}
             </div>
-            {% endfor %}
+            <div class="form-group
+                        {% if form.email.errors %}has-error{% endif %}">
+                {% render_field form.email class="form-control" required="" placeholder="Email" type="email" %}
+            </div>
+            <div class="form-group
+                        {% if form.password.errors %}has-error{% endif %}">
+                {% render_field form.password class="form-control" required="" placeholder="Password" %}
+            </div>
             <div class="checkbox">
                 <label for="show_pass">
                     <input type="checkbox" id="show_pass"> Show Password?
@@ -42,7 +43,7 @@
         </form>
         <hr><hr>
         <p>Already have an account?
-        <a href="{% url 'login_view' %}">Login</a>.</p>
+        <a href="{% url 'auth:login_view' %}">Login</a>.</p>
     </div>
 </div>
 {% endblock %}

@@ -41,10 +41,27 @@
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
                             {% if user.is_authenticated %}
-                            <li><a href="#">Logout</a></li>
+                            <li>
+                                <a href="{% url 'askfm:my_profile_view' %}">
+                                    My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'auth:logout_view' %}">
+                                    Logout
+                                </a>
+                            </li>
                             {% else %}
-                            <li><a href="#">Sign Up</a></li>
-                            <li><a href="{% url 'login_view' %}">Login</a></li>
+                            <li>
+                                <a href="{% url 'auth:registration_view' %}">
+                                    Register
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'auth:login_view' %}">
+                                    Login
+                                </a>
+                            </li>
                             {% endif %}
                         </ul>
                     </div><!--/.nav-collapse -->
