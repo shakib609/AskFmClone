@@ -10,7 +10,8 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!-- Bootstrap -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+              rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -75,9 +76,12 @@
 
         {% block scripts %}
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type="text/javascript"
+                src="{% static 'vendor/jQuery/jquery-2.2.0.js' %}"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript"
+                src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}">
+        </script>
         <script src="{% static 'js/scripts.js' %}"></script>
         {% endblock %}
     {% endblock %}

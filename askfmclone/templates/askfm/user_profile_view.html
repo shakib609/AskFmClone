@@ -15,12 +15,24 @@
             </a></p>
         </div>
 
-        <dl>
-            {% for question in answered_questions %}
-            <dt>{{ question.text }}</dt>
-            <dd>{{ question.answer }}</dd>
-            {% endfor %}
-        </dl>
+        <div class="row">
+            <div class="col-md-8">
+                {% if answered_questions %}
+                <dl>
+                    {% for question in answered_questions %}
+                    <dt>{{ question.text }}</dt>
+                    <dd>{{ question.answer }}</dd>
+                    {% endfor %}
+                </dl>
+                {% else %}
+                <h4 class="text-center">
+                    {{ username }}
+                    has not answered any questions yet!
+                </h4>
+                {% endif %}
+            </div>
+            <div class="col-md-4"></div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -11,7 +11,7 @@ from .forms import LoginForm, RegistrationForm
 
 def login_view(request):
     if request.user.is_authenticated():
-        return redirect('/')
+        return redirect(reverse('askfm:my_profile_view'))
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
