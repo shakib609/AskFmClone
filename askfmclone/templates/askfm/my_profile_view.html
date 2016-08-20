@@ -16,10 +16,15 @@
                 {% if asked_questions %}
                 <dl>
                     {% for question in asked_questions %}
-                    <dt>{{ question.text }}</dt>
+                    <dt>
+                        {{ question.text }}
+                     </dt>
+                        <dd>
+                            Asked to - <a href="{% url 'askfm:user_profile_view' question.asked_to.username %}">{{ question.asked_to }}</a><br>
                         {% if question.answer %}
-                        <dd>{{ question.answer }}</dd>
+                            {{ question.answer.text }}
                         {% endif %}
+                        </dd>
                     {% endfor %}
                 </dl>
                 {% else %}

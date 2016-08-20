@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
     {{ username }} | {{ block.super }}
@@ -31,7 +32,24 @@
                 </h4>
                 {% endif %}
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h4 class="text-center">Ask a question</h4>
+                <form method="post">
+                    {% include 'form_errors.html' %}
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="form-group">
+                        {% render_field field class="form-control" placeholder=field.label required="" %}
+                    </div>
+                    <div class="form-group">
+                        <input type="submit"
+                               class="btn btn-primary form-control"
+                               value="Ask">
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
         </div>
     </div>
 </div>

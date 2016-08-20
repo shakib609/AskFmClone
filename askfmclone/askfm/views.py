@@ -1,18 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Question
+from .forms import QuestionForm
 
 
 @login_required
 def my_profile_view(request):
     unanswered_questions = Question.objects.filter(
                                 asked_to=request.user,
-                                answer=None).select_related(
-                                                'asked_by').order_by('-time')
+                                answer=None
+                            ).select_related('asked_by').order_by('-time')
     asked_questions = Question.objects.filter(
-                            asked_by=request.user).order_by('-time')
+                            asked_by=request.user
+                        ).select_related('asked_to').order_by('-time')
     context = {
         'unanswered_questions': unanswered_questions,
         'asked_questions': asked_questions
@@ -32,10 +36,28 @@ def user_profile_view(request, username):
     asked_questions = Question.objects.filter(asked_by=user).select_related(
                               'answer').order_by('-time')
 
+    if request.method == 'POST':
+        if not request.user.is_authenticated():
+            messages.error('You must login first!')
+            return redirect(
+                        reverse('auth:login_view') + '?next=/{}/'.format(
+                                                                    username))
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            q = Question(
+                    asked_by=request.user,
+                    asked_to=get_object_or_404(User, username=username),
+                    text=form.cleaned_data['question_text'])
+            q.save()
+            messages.success(request, 'Your question has been submitted!')
+            return redirect(reverse('askfm:user_profile_view'))
+    else:
+        form = QuestionForm()
     context = {
         'username': username,
         'answered_questions': answered_questions,
-        'asked_questions': asked_questions
+        'asked_questions': asked_questions,
+        'form': form
     }
     return render(request, 'askfm/user_profile_view.html', context)
 
