@@ -9,6 +9,7 @@ class Question(models.Model):
     asked_by = models.ForeignKey(User, default=None, null=True,
                                  related_name='asked_by_questions')
     time = models.DateTimeField(auto_now_add=True)
+    anonymous = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text[:40]

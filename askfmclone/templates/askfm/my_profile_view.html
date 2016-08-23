@@ -40,11 +40,16 @@
                     <div class="row">
                         <div class="col-md-9">
                             <dt>{{ question.text }}</dt>
-                            <dd>Asked by:
+                            <dd>
+                                {% if not question.anonymous %}
+                                Asked by:
                                 <a
                                     href="{% url 'askfm:user_profile_view' question.asked_by.username %}">
                                     {{ question.asked_by.username }}
                                 </a><br>
+                                {% else %}
+                                Asked anonymously
+                                {% endif %}
                             </dd>
                         </div>
                         <div class="col-md-3">

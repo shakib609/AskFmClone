@@ -11,9 +11,6 @@
     <div class="col-md-10 col-md-offset-1">
         <div class="page-header text-center">
             <h2>{{ username }}</h1>
-            <p><a href="#" class="btn btn-primary">
-                Ask Something
-            </a></p>
         </div>
 
         <div class="row">
@@ -38,16 +35,22 @@
                     {% include 'form_errors.html' %}
                     {% csrf_token %}
 
-                    {% for field in form %}
                     <div class="form-group">
-                        {% render_field field class="form-control" placeholder=field.label required="" %}
+                        {% render_field form.question_text class="form-control" placeholder=form.question_text.label required="" %}
                     </div>
+
+                    <div class="checkbox">
+                        <label for="{{ form.anonymous.auto_id }}">
+                            {% render_field form.anonymous %}
+                            {{ form.anonymous.label }}
+                        </label>
+                    </div>
+
                     <div class="form-group">
                         <input type="submit"
                                class="btn btn-primary form-control"
                                value="Ask">
                     </div>
-                    {% endfor %}
                 </form>
             </div>
         </div>

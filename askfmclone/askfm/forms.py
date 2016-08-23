@@ -1,8 +1,7 @@
 from django import forms
-from django.core import validators
-from django.contrib.auth.models import User
+# from django.core import validators
 
-from .models import Answer
+# from .models import Answer
 
 
 # class AnswerForm(forms.Form):
@@ -19,10 +18,15 @@ from .models import Answer
 
 class QuestionForm(forms.Form):
     question_text = forms.CharField(
-                        widget=forms.Textarea,
-                        max_length=300,
-                        label='Ask something!',
-                        required=True)
+        widget=forms.Textarea,
+        max_length=300,
+        label='Ask something!',
+        required=True
+    )
+    anonymous = forms.BooleanField(
+        widget=forms.CheckboxInput,
+        label='Ask Anonymously'
+    )
 
     def clean_question_text(self):
         question_text = self.cleaned_data.get('question_text')
