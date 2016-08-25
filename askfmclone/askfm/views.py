@@ -3,8 +3,9 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
-from .models import Question
+from .models import Question, Answer
 from .forms import QuestionForm
 
 
@@ -64,6 +65,17 @@ def user_profile_view(request, username):
 
 
 @login_required
-def answer_view(request, question_id):
-    question = get_object_or_404(Question, id=question_id)
-    return
+@require_POST
+def answer_view(request):
+    question_id = request.POST.get('question-id')
+    answer_text = request.POST.get('answer-text')
+
+    if question_id and answer_text:
+        question = get_object_or_404(
+            Question, id=question_id, asked_to=request.user
+        )
+        answer = Answer.objects.create(text=answer_text, question=question)
+        messages.success(request, 'Answer submitted successfully!')
+    else:
+        messages.error(request, 'Something went wrong.', extra_tags='danger')
+    return redirect(reverse('askfm:my_profile_view'))

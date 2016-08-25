@@ -18,6 +18,7 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField(default=None)
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    answered_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text[:40]

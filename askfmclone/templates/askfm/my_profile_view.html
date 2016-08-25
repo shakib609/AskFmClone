@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 
 {% block page_content %}
 {% include 'flash_messages.html' %}
@@ -28,7 +28,7 @@
                     {% endfor %}
                 </dl>
                 {% else %}
-                <p class="text-center">You haven't asked any questions yet!</p>
+                <p class="text-center">No questions to display!</p>
                 {% endif %}
             </div>
             <div class="col-md-6">
@@ -37,34 +37,69 @@
                 {% if unanswered_questions %}
                 <dl>
                     {% for question in unanswered_questions %}
-                    <div class="row">
-                        <div class="col-md-9">
-                            <dt>{{ question.text }}</dt>
-                            <dd>
-                                {% if not question.anonymous %}
-                                Asked by:
-                                <a
-                                    href="{% url 'askfm:user_profile_view' question.asked_by.username %}">
-                                    {{ question.asked_by.username }}
-                                </a><br>
-                                {% else %}
-                                Asked anonymously
-                                {% endif %}
-                            </dd>
-                        </div>
-                        <div class="col-md-3">
-                            <p class="text-right">
-                                <a class="btn btn-primary">Answer</a>
-                            </p>
-                        </div>
-                    </div>
+                    <dt>{{ question.text }}</dt>
+                    <dd>
+                        {% if not question.anonymous %}
+                        Asked by:
+                        <a
+                            href="{% url 'askfm:user_profile_view' question.asked_by.username %}">
+                            {{ question.asked_by.username }}
+                        </a>
+                        {% else %}
+                        Asked anonymously
+                        {% endif %} &gt;&gt;
+                        <a class="answer-button"
+                            href="#"
+                            data-toggle="modal"
+                            data-target="#answer-form"
+                            data-questiontext="{{ question.text }}"
+                            data-questionid="{{ question.id }}">
+                            Answer
+                        </a>
+                    </dd>
                     {% endfor %}
                 </dl>
                 {% else %}
-                <p>No Questions answered yet!</p>
+                <p>No Questions to answer!</p>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="answer-form" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Answer Form</h4>
+            </div>
+            <div class="modal-body">
+                <h5 id="question-text"></h5>
+                <form action="{% url 'askfm:answer_view' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="question-id" name="question-id"
+                        required>
+                    <div class="form-group">
+                        <label for="answer-text">Answer</label>
+                        <textarea name="answer-text"
+                            class="form-control"
+                            required></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary"
+                            value="Submit">
+                    <a class="btn btn-danger" data-dismiss="modal">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/modal.js' %}"></script>
 {% endblock %}
