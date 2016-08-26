@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
-from .models import Question, Answer
+from ..question.models import Question, Answer
 from .forms import QuestionForm
 
 
@@ -44,11 +44,12 @@ def user_profile_view(request, username):
 
         form = QuestionForm(request.POST)
         if form.is_valid():
+            print(anonymous)
             q = Question(
                 asked_by=request.user,
                 asked_to=get_object_or_404(User, username=username),
                 text=form.cleaned_data['question_text'],
-                anonymous=form.cleaned_data['anonymous']
+                anonymous=form.cleaned_data.get('anonymous', False)
             )
             q.save()
             messages.success(request, 'Your question has been submitted!')

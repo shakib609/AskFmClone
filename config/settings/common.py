@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'askfmclone.askfm',
+    'askfmclone.question',
     'widget_tweaks'
 )
 

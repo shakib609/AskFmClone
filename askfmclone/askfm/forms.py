@@ -1,19 +1,4 @@
 from django import forms
-# from django.core import validators
-
-# from .models import Answer
-
-
-# class AnswerForm(forms.Form):
-#     answer = forms.Textarea(widget=forms.TextInput,
-#                             required=True)
-
-#     def clean_answer(self):
-#         answer = self.cleaned_data.get('answer')
-
-#         if answer:
-#             answer = answer.strip()
-#         return answer
 
 
 class QuestionForm(forms.Form):
@@ -25,7 +10,8 @@ class QuestionForm(forms.Form):
     )
     anonymous = forms.BooleanField(
         widget=forms.CheckboxInput,
-        label='Ask Anonymously'
+        label='Ask Anonymously',
+        required=False
     )
 
     def clean_question_text(self):
