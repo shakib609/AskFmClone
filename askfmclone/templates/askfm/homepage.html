@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} | Homepage
+{% endblock%}
+
+{% block page_content %}
+    <div class="page-header text-center">
+        <h1>
+            Welcome to Ask.fm Clone
+        </h1>
+        <p>
+            <a href="{% url 'auth:registration_view' %}"
+                class="btn btn-primary">
+                Register!
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'auth:login_view' %}"
+                class="btn btn-primary">
+                Login
+            </a>
+        </p>
+    </div>
+{% endblock%}

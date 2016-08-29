@@ -18,12 +18,28 @@ from django.contrib import admin
 urlpatterns = [
 
     # Admin
-    url(r'^admin/', include(admin.site.urls)),
+    url(
+        r'^admin/',
+        include(admin.site.urls)
+    ),
 
     # Auth
-    url(r'^auth/', include('askfmclone.auth.urls', namespace='auth')),
+    url(
+        r'^auth/',
+        include('askfmclone.auth.urls', namespace='auth')
+    ),
 
 
     # askfm app
-    url(r'^', include('askfmclone.askfm.urls', namespace='askfm')),
+    url(
+        r'^',
+        include('askfmclone.askfm.urls', namespace='askfm')
+    ),
+
+
+    # question app
+    url(
+        r'^question/',
+        include('askfmclone.question.urls', namespace='question')
+    ),
 ]

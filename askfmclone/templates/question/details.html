@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} | {{ question.text}}
+{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>Question</h1>
+        <p>{{ question.text }}</p>
+        {% if question.answer %}
+        <p>{{ question.answer.text }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
