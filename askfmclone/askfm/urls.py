@@ -5,6 +5,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$',
+        views.homepage,
+        name='homepage'),
+    url(r'^my/$',
         views.my_profile_view,
         name='my_profile_view'),
     url(r'^(?P<username>([.\-_a-zA-Z0-9]){4,})/$',

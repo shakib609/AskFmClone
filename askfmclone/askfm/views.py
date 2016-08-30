@@ -9,20 +9,25 @@ from ..question.models import Question, Answer
 from .forms import QuestionForm
 
 
+@login_required
 def my_profile_view(request):
+    unanswered_questions = Question.objects.filter(
+                                asked_to=request.user,
+                                answer=None
+                            ).select_related('asked_by').order_by('-time')
+    asked_questions = Question.objects.filter(
+                            asked_by=request.user
+                        ).select_related('asked_to').order_by('-time')
+    context = {
+        'unanswered_questions': unanswered_questions,
+        'asked_questions': asked_questions
+    }
+    return render(request, 'askfm/my_profile_view.html', context)
+
+
+def homepage(request):
     if request.user.is_authenticated():
-        unanswered_questions = Question.objects.filter(
-                                    asked_to=request.user,
-                                    answer=None
-                                ).select_related('asked_by').order_by('-time')
-        asked_questions = Question.objects.filter(
-                                asked_by=request.user
-                            ).select_related('asked_to').order_by('-time')
-        context = {
-            'unanswered_questions': unanswered_questions,
-            'asked_questions': asked_questions
-        }
-        return render(request, 'askfm/my_profile_view.html', context)
+        return redirect(reverse('askfm:my_profile_view'))
     else:
         return render(request, 'askfm/homepage.html')
 

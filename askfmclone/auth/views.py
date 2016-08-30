@@ -41,7 +41,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.success(request, 'Logged out successfully!')
-    return redirect(reverse('auth:login_view'))
+    return redirect(reverse('askfm:homepage'))
 
 
 def registration_view(request):
