@@ -38,7 +38,7 @@
                         <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand"
-                            href="{% url 'askfm:my_profile_view'%}">
+                            href="{% url 'askfm:homepage'%}">
                                 AskFmClone
                         </a>
                     </div>
@@ -46,23 +46,18 @@
                         <ul class="nav navbar-nav navbar-right">
                             {% if user.is_authenticated %}
                             <li>
-                                <a href="{% url 'askfm:my_profile_view' %}">
-                                    My Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'auth:logout_view' %}">
+                                <a href="{% url 'auth:logout' %}">
                                     Logout
                                 </a>
                             </li>
                             {% else %}
                             <li>
-                                <a href="{% url 'auth:registration_view' %}">
+                                <a href="{% url 'auth:registration' %}">
                                     Register
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'auth:login_view' %}">
+                                <a href="{% url 'auth:login' %}">
                                     Login
                                 </a>
                             </li>

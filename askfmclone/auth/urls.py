@@ -4,12 +4,12 @@ from . import views
 
 urlpatterns = [
     url(r'^login/$',
-        views.login_view,
-        name='login_view'),
+        views.login,
+        name='login'),
     url(r'^logout/$',
-        views.logout_view,
-        name='logout_view'),
+        views.logout,
+        name='logout'),
     url(r'^register/$',
-        views.registration_view,
-        name='registration_view'),
+        views.registration,
+        name='registration'),
 ]

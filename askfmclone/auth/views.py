@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate,\
+                                login as djlogin, logout as djlogout
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -9,7 +10,7 @@ import re
 from .forms import LoginForm, RegistrationForm
 
 
-def login_view(request):
+def login(request):
     if request.user.is_authenticated():
         return redirect(reverse('askfm:my_profile_view'))
     if request.method == 'POST':
@@ -27,7 +28,7 @@ def login_view(request):
                    )
             if user is not None and user.is_active:
                 # TODO: Improve here
-                login(request, user)
+                djlogin(request, user)
                 next_page = request.GET.get(
                                 'next') or reverse('askfm:my_profile_view')
                 messages.success(request, 'Logged in Successfully!')
@@ -38,13 +39,14 @@ def login_view(request):
     return render(request, 'auth/login_view.html', {'form': form})
 
 
-def logout_view(request):
-    logout(request)
-    messages.success(request, 'Logged out successfully!')
+def logout(request):
+    if request.user.is_authenticated():
+        djlogout(request)
+        messages.success(request, 'Logged out successfully!')
     return redirect(reverse('askfm:homepage'))
 
 
-def registration_view(request):
+def registration(request):
     next_page = request.GET.get('next') or reverse('askfm:my_profile_view')
     if request.user.is_authenticated():
         return redirect(next_page)
@@ -63,7 +65,7 @@ def registration_view(request):
             user = authenticate(
                         username=username, password=password
                    )
-            login(request, user)
+            djlogin(request, user)
             messages.success(
                 request, 'Your Account has been created successfully.')
             return redirect(next_page)
