@@ -12,7 +12,7 @@ from .forms import LoginForm, RegistrationForm
 
 def login(request):
     if request.user.is_authenticated():
-        return redirect(reverse('askfm:my_profile_view'))
+        return redirect(reverse('askfm:my_profile'))
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -30,7 +30,7 @@ def login(request):
                 # TODO: Improve here
                 djlogin(request, user)
                 next_page = request.GET.get(
-                                'next') or reverse('askfm:my_profile_view')
+                    'next') or reverse('askfm:my_profile')
                 messages.success(request, 'Logged in Successfully!')
                 return redirect(next_page)
             messages.error(request, 'Wrong username or password',
@@ -47,7 +47,7 @@ def logout(request):
 
 
 def registration(request):
-    next_page = request.GET.get('next') or reverse('askfm:my_profile_view')
+    next_page = request.GET.get('next') or reverse('askfm:my_profile')
     if request.user.is_authenticated():
         return redirect(next_page)
 

@@ -20,7 +20,7 @@
                         {{ question.text }}
                      </dt>
                         <dd>
-                            Asked to - <a href="{% url 'askfm:user_profile_view' question.asked_to.username %}">{{ question.asked_to }}</a><br>
+                            Asked to - <a href="{% url 'askfm:user_profile' question.asked_to.username %}">{{ question.asked_to }}</a><br>
                         {% if question.answer %}
                             {{ question.answer.text }}
                         {% endif %}
@@ -42,7 +42,7 @@
                         {% if not question.anonymous %}
                         Asked by:
                         <a
-                            href="{% url 'askfm:user_profile_view' question.asked_by.username %}">
+                            href="{% url 'askfm:user_profile' question.asked_by.username %}">
                             {{ question.asked_by.username }}
                         </a>
                         {% else %}
@@ -79,7 +79,7 @@
             </div>
             <div class="modal-body">
                 <h5 id="question-text"></h5>
-                <form action="{% url 'askfm:answer_view' %}" method="post">
+                <form action="{% url 'askfm:answer' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" id="question-id" name="question-id"
                         required>

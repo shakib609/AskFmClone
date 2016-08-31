@@ -10,7 +10,7 @@ from .forms import QuestionForm
 
 
 @login_required
-def my_profile_view(request):
+def my_profile(request):
     unanswered_questions = Question.objects.filter(
                                 asked_to=request.user,
                                 answer=None
@@ -22,20 +22,20 @@ def my_profile_view(request):
         'unanswered_questions': unanswered_questions,
         'asked_questions': asked_questions
     }
-    return render(request, 'askfm/my_profile_view.html', context)
+    return render(request, 'askfm/my_profile.html', context)
 
 
 def homepage(request):
     if request.user.is_authenticated():
-        return redirect(reverse('askfm:my_profile_view'))
+        return redirect(reverse('askfm:my_profile'))
     else:
         return render(request, 'askfm/homepage.html')
 
 
-def user_profile_view(request, username):
+def user_profile(request, username):
     user = get_object_or_404(User, username=username)
     if request.user == user:
-        return redirect('askfm:my_profile_view')
+        return redirect('askfm:my_profile')
 
     answered_questions = Question.objects.exclude(answer=None).filter(
         asked_to=user).select_related('answer').order_by('-time')
@@ -47,7 +47,7 @@ def user_profile_view(request, username):
         if not request.user.is_authenticated():
             messages.error('You must login first!')
             return redirect(
-                reverse('auth:login_view') + '?next=/{}/'.format(username))
+                reverse('auth:login') + '?next=/{}/'.format(username))
 
         form = QuestionForm(request.POST)
         if form.is_valid():
@@ -60,7 +60,7 @@ def user_profile_view(request, username):
             )
             q.save()
             messages.success(request, 'Your question has been submitted!')
-            return redirect(reverse('askfm:user_profile_view', args=(username,)))
+            return redirect(reverse('askfm:user_profile', args=(username,)))
     else:
         form = QuestionForm()
     context = {
@@ -69,12 +69,12 @@ def user_profile_view(request, username):
         'asked_questions': asked_questions,
         'form': form
     }
-    return render(request, 'askfm/user_profile_view.html', context)
+    return render(request, 'askfm/user_profile.html', context)
 
 
 @login_required
 @require_POST
-def answer_view(request):
+def answer(request):
     question_id = request.POST.get('question-id')
     answer_text = request.POST.get('answer-text')
 
@@ -86,4 +86,4 @@ def answer_view(request):
         messages.success(request, 'Answer submitted successfully!')
     else:
         messages.error(request, 'Something went wrong.', extra_tags='danger')
-    return redirect(reverse('askfm:my_profile_view'))
+    return redirect(reverse('askfm:my_profile'))

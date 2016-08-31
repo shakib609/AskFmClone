@@ -18,4 +18,4 @@ def details(request, question_id):
         return render(request, 'question/details.html', context)
     else:
         messages.error(request, 'Something went wrong!', extra_tags='danger')
-        return redirect(reverse('askfm:my_profile_view'))
+        return redirect(reverse('askfm:my_profile'))
