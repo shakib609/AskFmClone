@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
@@ -19,6 +20,16 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text[:40]
+
+    def clean(self):
+        if self.asked_by == self.asked_to:
+            raise ValidationError(
+                '%s cannot ask a question to himself' % self.asked_by.username
+            )
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        return super(Question, self).save(*args, **kwargs)
 
     def total_likes(self):
         """Returns the total likes count"""
