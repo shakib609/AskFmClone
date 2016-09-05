@@ -17,7 +17,17 @@
                 {% if answered_questions %}
                 <dl>
                     {% for question in answered_questions %}
-                    <dt>{{ question.text }}</dt>
+                    <dt>{{ question.text }}
+                        <small>
+                        {% if question.anonymous %}
+                            Anonymous
+                        {% else %}
+                            <a href="{% url 'askfm:user_profile' question.asked_by.username %}">
+                                {{ question.asked_by.username }}
+                            </a>
+                        {% endif %}
+                        </small>
+                    </dt>
                     <dd>{{ question.answer }}</dd>
                     {% endfor %}
                 </dl>

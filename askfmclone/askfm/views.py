@@ -51,7 +51,6 @@ def user_profile(request, username):
 
         form = QuestionForm(request.POST)
         if form.is_valid():
-            print(anonymous)
             q = Question(
                 asked_by=request.user,
                 asked_to=get_object_or_404(User, username=username),

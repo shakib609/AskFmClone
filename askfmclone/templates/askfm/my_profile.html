@@ -20,10 +20,19 @@
                         {{ question.text }}
                      </dt>
                         <dd>
-                            Asked to - <a href="{% url 'askfm:user_profile' question.asked_to.username %}">{{ question.asked_to }}</a><br>
-                        {% if question.answer %}
+                            {% if question.answer %}
                             {{ question.answer.text }}
-                        {% endif %}
+                            <small>
+                                <a href="{% url 'askfm:user_profile' question.asked_to.username %}">
+                                    {{ question.asked_to.username }}
+                                </a>
+                            </small>
+                            {% else %}
+                            Asked to -
+                            <a href="{% url 'askfm:user_profile' question.asked_to.username %}">
+                                {{ question.asked_to.username }}
+                            </a>
+                            {% endif %}
                         </dd>
                     {% endfor %}
                 </dl>
@@ -37,24 +46,26 @@
                 {% if unanswered_questions %}
                 <dl>
                     {% for question in unanswered_questions %}
-                    <dt>{{ question.text }}</dt>
+                    <dt>
+                        {{ question.text }}
+                        <small>
+                            {% if not question.anonymous %}
+                            <a href="{% url 'askfm:user_profile' question.asked_by.username %}">
+                                {{ question.asked_by.username }}
+                            </a>
+                            {% else %}
+                            Anonymous
+                            {% endif %}
+                        </small>
+                    </dt>
                     <dd>
-                        {% if not question.anonymous %}
-                        Asked by:
-                        <a
-                            href="{% url 'askfm:user_profile' question.asked_by.username %}">
-                            {{ question.asked_by.username }}
-                        </a>
-                        {% else %}
-                        Asked anonymously
-                        {% endif %} &gt;&gt;
                         <a class="answer-button"
                             href="#"
                             data-toggle="modal"
                             data-target="#answer-form"
                             data-questiontext="{{ question.text }}"
                             data-questionid="{{ question.id }}">
-                            Answer
+                            Answer Now
                         </a>
                     </dd>
                     {% endfor %}

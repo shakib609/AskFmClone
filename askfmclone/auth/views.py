@@ -25,7 +25,7 @@ def login(request):
             user = authenticate(
                        username=username,
                        password=form.cleaned_data['password']
-                   )
+           )
             if user is not None and user.is_active:
                 # TODO: Improve here
                 djlogin(request, user)
