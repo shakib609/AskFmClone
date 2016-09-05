@@ -15,14 +15,30 @@
         <h3><u>Ask and answer</u></h3>
         <br>
         <p>
-            <a href="{% url 'auth:registration' %}"
-                class="btn btn-primary">
-                Register
-            </a>
-            <a href="{% url 'auth:login' %}"
-                class="btn btn-success">
-                Login
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'askfm:my_profile' %}"
+                    class="btn btn-primary">
+                    My Profile
+                </a>
+            {% else %}
+                <a href="{% url 'auth:registration' %}"
+                    class="btn btn-primary">
+                    Register
+                </a>
+                <a href="{% url 'auth:login' %}"
+                    class="btn btn-success">
+                    Login
+                </a>
+            {% endif%}
+            <ul>
+                {% for user in random_users %}
+                <li>
+                    <a href="{% url 'askfm:user_profile' user.username %}">
+                        {{ user.username }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
         </p>
     </div>
 {% endblock%}

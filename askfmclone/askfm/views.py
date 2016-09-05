@@ -26,10 +26,11 @@ def my_profile(request):
 
 
 def homepage(request):
-    if request.user.is_authenticated():
-        return redirect(reverse('askfm:my_profile'))
-    else:
-        return render(request, 'askfm/homepage.html')
+    random_users = User.objects.order_by('?')[:10]
+    context = {
+        'random_users': random_users
+    }
+    return render(request, 'askfm/homepage.html', context)
 
 
 def user_profile(request, username):
