@@ -23,8 +23,12 @@
           <nav>
             <ul class="nav masthead-nav">
               <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">Register</a></li>
-              <li><a href="#">Login</a></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url 'askfm:my_profile' %}">My Profile</a></li>
+              {% else %}
+              <li><a href="{% url 'auth:registration' %}">Register</a></li>
+              <li><a href="{% url 'auth:login' %}">Login</a></li>
+              {% endif %}
             </ul>
           </nav>
         </div>
