@@ -3,7 +3,15 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 
-class Question(models.Model):
+class TimeStampedModel(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class Question(TimeStampedModel):
     """Question Model
     - Every question has a CharField(text)
     - Every question has two ForeignKeys(asked_by, asked_to)
@@ -15,7 +23,6 @@ class Question(models.Model):
                                  related_name='asked_to_questions')
     asked_by = models.ForeignKey(User, default=None, null=True,
                                  related_name='asked_by_questions')
-    created = models.DateTimeField(auto_now_add=True)
     anonymous = models.BooleanField(default=False)
 
     def __str__(self):
@@ -36,14 +43,13 @@ class Question(models.Model):
         return self.likes.count()
 
 
-class Answer(models.Model):
+class Answer(TimeStampedModel):
     """Answer Model
     - Every answer has a TextField(text)
     - Every answer has a DateTimeField(asked_at)
     - Every question has only one Answer"""
     text = models.TextField(default=None)
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text[:40]
