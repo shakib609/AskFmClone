@@ -15,7 +15,7 @@ class Question(models.Model):
                                  related_name='asked_to_questions')
     asked_by = models.ForeignKey(User, default=None, null=True,
                                  related_name='asked_by_questions')
-    time = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     anonymous = models.BooleanField(default=False)
 
     def __str__(self):
@@ -43,7 +43,7 @@ class Answer(models.Model):
     - Every question has only one Answer"""
     text = models.TextField(default=None)
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
-    answered_at = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.text[:40]

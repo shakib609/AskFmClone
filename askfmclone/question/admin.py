@@ -6,6 +6,7 @@ from .models import Question, Answer
 class AnswerInline(admin.StackedInline):
     model = Answer
 
+
 class QuestionInline(admin.StackedInline):
     model = Question
 
@@ -16,9 +17,9 @@ class QuestionAdmin(admin.ModelAdmin):
         (None, {'fields': ['text', 'anonymous']}),
         ('Related Users', {'fields': ['asked_by', 'asked_to']}),
     ]
-    list_filter = ('time', 'asked_by', 'asked_to')
+    list_filter = ('created', 'asked_by', 'asked_to')
     search_fields = ('text',)
-    list_display = ('text', 'time', 'asked_by', 'asked_to',)
+    list_display = ('text', 'created', 'asked_by', 'asked_to',)
 
 
 class AnswerAdmin(admin.ModelAdmin):
@@ -27,9 +28,9 @@ class AnswerAdmin(admin.ModelAdmin):
         (None, {'fields': ['text']}),
         ('Question', {'fields': ['question']}),
     ]
-    list_display = ('text', 'answered_at', 'question_id')
+    list_display = ('text', 'created', 'question_id')
     search_fields = ('text',)
-    list_filter = ('answered_at',)
+    list_filter = ('created',)
 
 
 admin.site.register(Question, QuestionAdmin)

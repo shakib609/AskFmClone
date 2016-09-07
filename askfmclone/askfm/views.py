@@ -14,10 +14,10 @@ def my_profile(request):
     unanswered_questions = Question.objects.filter(
                                 asked_to=request.user,
                                 answer=None
-                            ).select_related('asked_by').order_by('-time')
+                            ).select_related('asked_by').order_by('-created')
     asked_questions = Question.objects.filter(
                             asked_by=request.user
-                        ).select_related('asked_to').order_by('-time')
+                        ).select_related('asked_to').order_by('-created')
     context = {
         'unanswered_questions': unanswered_questions,
         'asked_questions': asked_questions
@@ -39,10 +39,10 @@ def user_profile(request, username):
         return redirect('askfm:my_profile')
 
     answered_questions = Question.objects.exclude(answer=None).filter(
-        asked_to=user).select_related('answer').order_by('-time')
+        asked_to=user).select_related('answer').order_by('-created')
 
     asked_questions = Question.objects.filter(
-        asked_by=user).select_related('answer').order_by('-time')
+        asked_by=user).select_related('answer').order_by('-created')
 
     if request.method == 'POST':
         if not request.user.is_authenticated():
