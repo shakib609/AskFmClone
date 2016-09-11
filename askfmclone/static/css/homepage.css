@@ -19,12 +19,19 @@ a:hover {
   border: 1px solid #fff;
 }
 
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #337ab7;
+    text-shadow: none;
+    border-color: #2e6da4;
+}
+
 .btn {
     box-shadow: 0 1px 3px rgba(0,0,0,.5);
     transition: all 0.3s;
 }
 
-.btn:hover {
+.btn:hover, .btn:focus {
     transform: translateY(-5px);
 }
 
@@ -88,6 +95,7 @@ body {
   color: #fff;
   color: rgba(255,255,255,.75);
   border-bottom: 2px solid transparent;
+  transition: all 0.3s;
 }
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
