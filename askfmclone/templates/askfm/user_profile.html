@@ -12,7 +12,7 @@
             <div class="row avatar">
                 <div class="col-md-2 col-md-offset-5">
                     <img src="https://github.com/identicons/{{ username }}.png"
-                        alt="{{ user.username }} Avatar"
+                        alt="{{ username }} Avatar"
                         class="img-responsive img-thumbnail img-circle" />
                 </div>
             </div>
@@ -22,22 +22,29 @@
         <div class="row">
             <div class="col-md-8">
                 {% if answered_questions %}
-                <dl>
+                <div class="list-group">
                     {% for question in answered_questions %}
-                    <dt>{{ question.text }}
-                        <small>
-                        {% if question.anonymous %}
-                            Anonymous
-                        {% else %}
-                            <a href="{% url 'askfm:user_profile' question.asked_by.username %}">
-                                {{ question.asked_by.username }}
+                    <span class="list-group-item">
+                        <h4 class="list-group-item-heading">
+                            <a href="{% url 'question:question_details' question.id %}">
+                                {{ question.text }}
                             </a>
-                        {% endif %}
-                        </small>
-                    </dt>
-                    <dd>{{ question.answer }}</dd>
+                            <small>
+                            {% if question.anonymous %}
+                                Anonymous
+                            {% else %}
+                                <a href="{% url 'askfm:user_profile' question.asked_by.username %}">
+                                    {{ question.asked_by.username }}
+                                </a>
+                            {% endif %}
+                            </small>
+                        </h4>
+                        <p class="list-group-item-text">
+                            {{ question.answer }}
+                        </p>
+                    </span>
                     {% endfor %}
-                </dl>
+                </div>
                 {% else %}
                 <h4 class="text-center">
                     {{ username }}
@@ -46,6 +53,7 @@
                 {% endif %}
             </div>
             <div class="col-md-4">
+                {% if user.is_authenticated %}
                 <h4 class="text-center">Ask a question</h4>
                 <form method="post">
                     {% include 'form_errors.html' %}
@@ -68,6 +76,12 @@
                                value="Ask">
                     </div>
                 </form>
+                {% else %}
+                <h4 class="text-center">
+                    Want to ask a question?
+                    <a href="{% url 'auth:login' %}">Login</a> now.
+                </h4>
+                {% endif %}
             </div>
         </div>
     </div>

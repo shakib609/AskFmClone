@@ -21,62 +21,59 @@
                 <h4 class="text-center">Asked Questions</h4>
                 <hr>
                 {% if asked_questions %}
-                <dl>
+                <div class="list-group">
                     {% for question in asked_questions %}
-                    <dt>
-                        {{ question.text }}
-                     </dt>
-                        <dd>
-                            {% if question.answer %}
-                            {{ question.answer.text }}
+                    <span class="list-group-item">
+                        <a href="{% url 'question:question_details' question.id %}">
+                            <h4 class="list-group-item-heading">
+                                {{ question.text }}
+                            </h4>
+                        </a>
+                        <p class="list-group-item-text">
                             <small>
+                                Asked to -
                                 <a href="{% url 'askfm:user_profile' question.asked_to.username %}">
                                     {{ question.asked_to.username }}
                                 </a>
                             </small>
-                            {% else %}
-                            Asked to -
-                            <a href="{% url 'askfm:user_profile' question.asked_to.username %}">
-                                {{ question.asked_to.username }}
-                            </a>
+                            {% if question.answer %}
+                            <br>
+                            {{ question.answer.text }}
                             {% endif %}
-                        </dd>
+                        </p>
+                    </span>
                     {% endfor %}
-                </dl>
+                </div>
                 {% else %}
                 <p class="text-center">No questions to display!</p>
                 {% endif %}
             </div>
+
             <div class="col-md-6">
                 <h4 class="text-center">Not Answered Yet</h4>
                 <hr>
                 {% if unanswered_questions %}
-                <dl>
+                <div class="list-group">
                     {% for question in unanswered_questions %}
-                    <dt>
-                        {{ question.text }}
-                        <small>
-                            {% if not question.anonymous %}
-                            <a href="{% url 'askfm:user_profile' question.asked_by.username %}">
-                                {{ question.asked_by.username }}
-                            </a>
-                            {% else %}
-                            Anonymous
-                            {% endif %}
-                        </small>
-                    </dt>
-                    <dd>
-                        <a class="answer-button"
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#answer-form"
-                            data-questiontext="{{ question.text }}"
-                            data-questionid="{{ question.id }}">
-                            Answer Now
-                        </a>
-                    </dd>
+                    <a
+                        class="list-group-item"
+                        data-toggle="modal"
+                        data-target="#answer-form"
+                        data-questiontext="{{ question.text }}"
+                        data-questionid="{{ question.id }}"
+                        data-questionaskedby="{% if question.anonymous %}Anonymous{% else %}{{ question.asked_by.username }}{% endif %}"
+                        >
+                        <h4 class="list-group-item-heading">
+                            {{ question.text }}
+                            <small>
+                                {% if not question.anonymous %}
+                                    {{ question.asked_by.username }}
+                                {% endif %}
+                            </small>
+                        </h4>
+                    </a>
                     {% endfor %}
-                </dl>
+                </div>
                 {% else %}
                 <p class="text-center">No Questions to answer!</p>
                 {% endif %}
@@ -97,6 +94,9 @@
             </div>
             <div class="modal-body">
                 <h5 id="question-text"></h5>
+                <p>
+                    Asked by - <small id="question-asked-by"></small>
+                </p>
                 <form action="{% url 'askfm:answer' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" id="question-id" name="question-id"
