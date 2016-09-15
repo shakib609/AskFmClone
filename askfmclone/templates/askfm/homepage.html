@@ -52,6 +52,24 @@
             <a href="{% url 'auth:registration' %}"
                class="btn btn-lg btn-primary">Register</a>
             {% endif %}
+            <br>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <ul class="random-users">
+                        {% for user in random_users %}
+                        <li>
+                            <a href="{% url 'askfm:user_profile' user.username %}"
+                                data-toggle="tooltip" data-placement="top"
+                                title="{{ user.username }}">
+                                <img src="https://github.com/identicons/{{ user.username }}.png"
+                                    alt="{{ user.username }} Profile Pic"
+                                    class="user-avatar"/>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </p>
       </div>
 
@@ -66,4 +84,9 @@
   </div>
 
 </div>
+
+    {% block scripts %}
+        {{ block.super }}
+    {% endblock %}
+
 {% endblock %}

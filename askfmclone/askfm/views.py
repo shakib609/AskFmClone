@@ -26,7 +26,11 @@ def my_profile(request):
 
 
 def homepage(request):
-    random_users = User.objects.order_by('?')[:10]
+    if not request.user.is_authenticated:
+        random_users = User.objects.order_by('?')[:10]
+    else:
+        random_users = User.objects.order_by('?').exclude(
+                username=request.user.username)[:10]
     context = {
         'random_users': random_users
     }

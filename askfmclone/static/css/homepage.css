@@ -180,3 +180,29 @@ body {
     width: 700px;
   }
 }
+
+/*
+*Random Users Listing
+*/
+.random-users {
+    list-style: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.random-users > li {
+    display: inline-block;
+    width: 9%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.random-users > li:hover {
+    transform: translateY(-2px);
+}
+
+.random-users > li > a > img {
+    width: 100%;
+}

@@ -1,5 +1,6 @@
 (function() {
     alert_messages = $('.alert-success');
+    $('[data-toggle="tooltip"]').tooltip();
 
     if (alert_messages)
         setTimeout(function() {
