@@ -61,7 +61,7 @@
                             <a href="{% url 'askfm:user_profile' user.username %}"
                                 data-toggle="tooltip" data-placement="top"
                                 title="{{ user.username }}">
-                                <img src="https://github.com/identicons/{{ user.username }}.png"
+                                <img src="{% url 'avatar:image' user.username %}"
                                     alt="{{ user.username }} Profile Pic"
                                     class="user-avatar"/>
                             </a>

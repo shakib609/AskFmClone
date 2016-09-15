@@ -11,7 +11,7 @@
         <div class="page-header text-center">
             <div class="row avatar">
                 <div class="col-md-2 col-md-offset-5">
-                    <img src="https://github.com/identicons/{{ username }}.png"
+                    <img src="{% url 'avatar:image' username %}"
                         alt="{{ username }} Avatar"
                         class="img-responsive img-thumbnail" />
                 </div>

@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'askfmclone.question',
-    'widget_tweaks'
+    'widget_tweaks',
+    'django_pydenticon',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,5 +103,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
+# Login URL specific settings
 LOGIN_URL = '/auth/login/'
 LOGOUT_URL = '/auth/logout/'
+
+
+# django_pydenticon settings
+PYDENTICON_ROWS = 6
+PYDENTICON_COLUMNS = 6
+PYDENTICON_BACKGROUND = 'rgb(250,250,250)'

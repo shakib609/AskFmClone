@@ -42,4 +42,11 @@ urlpatterns = [
         r'^question/',
         include('askfmclone.question.urls', namespace='question')
     ),
+
+
+    # django_pydenticon urls
+    url(
+        r'^avatar/',
+        include('django_pydenticon.urls', namespace='avatar')
+    ),
 ]
