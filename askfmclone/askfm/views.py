@@ -1,12 +1,14 @@
+from django.db.models import Count
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from ..question.models import Question, Answer
 from .forms import QuestionForm
+from .helpers import get_total_likes
 
 
 @login_required
@@ -18,9 +20,11 @@ def my_profile(request):
     asked_questions = Question.objects.filter(
                             asked_by=request.user
                         ).select_related('asked_to').order_by('-created')
+
     context = {
         'unanswered_questions': unanswered_questions,
-        'asked_questions': asked_questions
+        'asked_questions': asked_questions,
+        'total_likes': get_total_likes(request.user)
     }
     return render(request, 'askfm/my_profile.html', context)
 
@@ -71,7 +75,8 @@ def user_profile(request, username):
         'username': username,
         'answered_questions': answered_questions,
         'asked_questions': asked_questions,
-        'form': form
+        'form': form,
+        'total_likes': get_total_likes(user)
     }
     return render(request, 'askfm/user_profile.html', context)
 
