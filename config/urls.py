@@ -29,14 +29,6 @@ urlpatterns = [
         include('askfmclone.auth.urls', namespace='auth')
     ),
 
-
-    # askfm app
-    url(
-        r'^',
-        include('askfmclone.askfm.urls', namespace='askfm')
-    ),
-
-
     # question app
     url(
         r'^question/',
@@ -48,5 +40,11 @@ urlpatterns = [
     url(
         r'^avatar/',
         include('django_pydenticon.urls', namespace='avatar')
+    ),
+
+    # askfm app
+    url(
+        r'^',
+        include('askfmclone.askfm.urls', namespace='askfm')
     ),
 ]

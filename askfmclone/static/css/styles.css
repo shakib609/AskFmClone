@@ -1,9 +1,6 @@
 /*
 ** Exo 2 Google Font
 */
-
-@import 'https://fonts.googleapis.com/css?family=Exo+2';
-
 .navbar {
   margin: 20px 0;
 }
@@ -11,5 +8,4 @@
 h1, h2, h3, h4, h5, h6,
 p, dl, ul, ol, input, form,
 button, .navbar-brand {
-    font-family: 'Exo 2', sans-serif;
 }

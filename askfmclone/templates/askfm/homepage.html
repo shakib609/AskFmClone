@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block title %}
-    {{ block.super }} | Homepage
-{% endblock %}
 
 {% block styles %}
     {{ block.super }}
@@ -11,82 +8,58 @@
 {% endblock %}
 
 {% block body %}
-<div class="site-wrapper homepage">
-
-  <div class="site-wrapper-inner">
-
-    <div class="cover-container">
-
-      <div class="masthead clearfix">
-        <div class="inner">
-          <h3 class="masthead-brand">AskFmClone</h3>
-          <nav>
-            <ul class="nav masthead-nav">
-              <li class="active"><a href="#">Home</a></li>
-              {% if user.is_authenticated %}
-              <li><a href="{% url 'askfm:my_profile' %}">My Profile</a></li>
-              {% else %}
-              <li><a href="{% url 'auth:registration' %}">Register</a></li>
-              <li><a href="{% url 'auth:login' %}">Login</a></li>
-              {% endif %}
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      <div class="inner cover">
-        <h1 class="cover-heading">AskFmClone</h1>
-        <p class="lead">
-            Who knew asking questions and answering them could be this much fun?
-            Join your friends now.
-        </p>
-        <p class="lead">
-            {% if user.is_authenticated %}
-            <a href="{% url 'askfm:my_profile'%}"
-               class="btn btn-lg btn-default">
-                My Profile
-            </a>
-            {% else %}
-            <a href="{% url 'auth:login' %}"
-               class="btn btn-lg btn-default">Login</a>
-            <a href="{% url 'auth:registration' %}"
-               class="btn btn-lg btn-primary">Register</a>
-            {% endif %}
-            <br>
+    <header>
+        <div class="container">
             <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <ul class="random-users">
-                        {% for user in random_users %}
-                        <li>
-                            <a href="{% url 'askfm:user_profile' user.username %}"
-                                data-toggle="tooltip" data-placement="top"
-                                title="{{ user.username }}">
-                                <img src="{% url 'avatar:image' user.username %}"
-                                    alt="{{ user.username }} Profile Pic"
-                                    class="user-avatar"/>
+                <div class="col-md-offset-4 col-md-4 text-center main-heading">
+                    <h1><b>AskFm</b>clone</h1>
+                    <p>Ask and Answer</p>
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8 col-xs-offset-4 col-xs-4">
+                            <a href="{% url 'auth:registration' %}"
+                                class="btn btn-default form-control"><b>Register</b></a>
+                            <br><br>
+                            <a href="{% url 'auth:login' %}">
+                                <u>Log In</u>
                             </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </p>
-      </div>
-
-      <div class="mastfoot">
-        <div class="inner">
-          <p>Copyright&copy; <a href="https://github.com/shakib609">Shakib Hossain</a> 2016.</p>
         </div>
-      </div>
+    </header>
 
-    </div>
-
-  </div>
-
-</div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <nav class="random-users hidden-xs">
+                        {% for user in random_users %}
+                            <a href="{% url 'askfm:user_profile' user.username %}">
+                                <img src="{% url 'avatar:image' user.username %}"
+                                    alt="{{ user.username }} avatar"
+                                    class="img-circle img-thumbnail"/>
+                            </a>
+                        {% endfor %}
+                    </nav>
+                    <nav class="links">
+                        <a href="https://github.com/shakib609/AskFmClone" target="_blank">About AskFmClone</a>
+                        <a href="#" target="_blank">Safety Center</a>
+                        <a href="#" target="_blank">Help</a>
+                        <a href="#" target="_blank">Terms of Use</a>
+                        <a href="#" target="_blank">Privacy Policy</a>
+                        <a href="#" target="_blank">Cookies Policy</a>
+                    </nav>
+                    <p class="text-right">
+                        &copy; <a href="https://github.com/shakib609">Shakib Hossain</a> 2016.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     {% block scripts %}
-        {{ block.super }}
+    {{ block.super }}
     {% endblock %}
 
 {% endblock %}
