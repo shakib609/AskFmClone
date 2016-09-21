@@ -30,10 +30,8 @@ def my_profile(request):
 
 def homepage(request):
     if not request.user.is_authenticated:
-        random_users = User.objects.order_by('?')[:10]
-    else:
-        random_users = User.objects.order_by('?').exclude(
-                username=request.user.username)[:10]
+        return redirect(reverse('askfm:my_profile'))
+    random_users = User.objects.order_by('?')[:20]
     context = {
         'random_users': random_users
     }
