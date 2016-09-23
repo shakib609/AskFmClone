@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'askfmclone.question',
+    'askfmclone.askfm',
     'widget_tweaks',
     'django_pydenticon',
 )
