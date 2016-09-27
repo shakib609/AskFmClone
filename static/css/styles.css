@@ -2,10 +2,44 @@
 ** Exo 2 Google Font
 */
 .navbar {
-  margin: 20px 0;
+  margin: 0 0 20px;
+}
+
+.navbar-orange {
+    border-bottom: 3px solid #ff643c;
+    color: #222;
+}
+
+.navbar-orange a {
+    color: #222;
+}
+
+.nav > li > a {
+    transition: all 0.25s;
+}
+.nav > li > a:active,
+.nav > li > a:hover {
+    background-color: #ff643c;
+    color: #fff;
+}
+
+a, a:active, a:hover {
+    color: #ff643c;
 }
 
 h1, h2, h3, h4, h5, h6,
 p, dl, ul, ol, input, form,
 button, .navbar-brand {
+}
+
+
+.btn-orange {
+    background-color: #ff643c;
+    color: #fff;
+    transition: all 0.25s;
+}
+
+.btn-orange:active, .btn-orange:hover {
+    color: #eee;
+    transform: translateY(-1px);
 }

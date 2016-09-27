@@ -2,19 +2,14 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 
-<!-- Empty Navbar -->
-{% block navbar %}
-{% endblock %}
-
 
 {% block page_content %}
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-sm-4 col-sm-offset-4">
         <div class="page-header text-center">
-            <h1><a href="/">AskFmClone</a></h1>
+            <h1>Register</h1>
         </div>
         <form method="post">
-            <h4 class="text-center">Register Now!</h4>
             {% include 'form_errors.html' %}
             {% csrf_token %}
             <div class="form-group
@@ -36,7 +31,7 @@
             </div>
             <div class="form-group">
                 <input type="submit"
-                       class="btn btn-primary col-xs-12"
+                       class="btn btn-orange col-xs-12"
                        value="Sign Up"/>
             </div>
         </form>
