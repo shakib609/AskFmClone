@@ -25,7 +25,7 @@ def login(request):
             user = authenticate(
                        username=username,
                        password=form.cleaned_data['password']
-           )
+            )
             if user is not None and user.is_active:
                 # TODO: Improve here
                 djlogin(request, user)
@@ -47,10 +47,11 @@ def logout(request):
 
 
 def registration(request):
-    next_page = request.GET.get('next') or reverse('askfm:my_profile')
     if request.user.is_authenticated():
-        return redirect(next_page)
-
+        return redirect(
+            reverse('askfm:user_profile', args=(request.user.username, ))
+        )
+    next_page = request.GET.get('next')
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
