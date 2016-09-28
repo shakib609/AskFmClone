@@ -29,7 +29,7 @@ def my_profile(request):
 
 
 def homepage(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         return redirect(reverse('askfm:my_profile'))
     random_users = User.objects.order_by('?')[:20]
     context = {
