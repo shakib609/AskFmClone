@@ -33,6 +33,10 @@
     background-color: #ff643c;
 }
 
+.navbar-toggle .icon-bar {
+    background-color: #ff643c;
+}
+
 
 a, a:active, a:hover {
     color: #ff643c;
