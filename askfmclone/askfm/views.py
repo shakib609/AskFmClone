@@ -10,27 +10,29 @@ from .forms import QuestionForm
 from .helpers import get_total_likes
 
 
-@login_required
-def my_profile(request):
-    unanswered_questions = Question.objects.filter(
-                                asked_to=request.user,
-                                answer=None
-                            ).select_related('asked_by').order_by('-created')
-    asked_questions = Question.objects.filter(
-                            asked_by=request.user
-                        ).select_related('asked_to').order_by('-created')
-
-    context = {
-        'unanswered_questions': unanswered_questions,
-        'asked_questions': asked_questions,
-        'total_likes': get_total_likes(request.user)
-    }
-    return render(request, 'askfm/my_profile.html', context)
+# @login_required
+# def my_profile(request):
+#     unanswered_questions = Question.objects.filter(
+#                                 asked_to=request.user,
+#                                 answer=None
+#                             ).select_related('asked_by').order_by('-created')
+#     asked_questions = Question.objects.filter(
+#                             asked_by=request.user
+#                         ).select_related('asked_to').order_by('-created')
+#
+#     context = {
+#         'unanswered_questions': unanswered_questions,
+#         'asked_questions': asked_questions,
+#         'total_likes': get_total_likes(request.user)
+#     }
+#     return render(request, 'askfm/my_profile.html', context)
 
 
 def homepage(request):
     if request.user.is_authenticated():
-        return redirect(reverse('askfm:my_profile'))
+        return redirect(
+            reverse('askfm:user_profile', args=(request.user.username, ))
+        )
     random_users = User.objects.order_by('?')[:20]
     context = {
         'random_users': random_users
@@ -40,9 +42,6 @@ def homepage(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    if request.user == user:
-        return redirect('askfm:my_profile')
-
     answered_questions = Question.objects.exclude(answer=None).filter(
         asked_to=user).select_related('answer').order_by('-created')
 
@@ -92,4 +91,6 @@ def answer(request):
         messages.success(request, 'Answer submitted successfully!')
     else:
         messages.error(request, 'Something went wrong.', extra_tags='danger')
-    return redirect(reverse('askfm:my_profile'))
+    return redirect(
+        reverse('askfm:user_profile', args=(request.user.username, ))
+    )
