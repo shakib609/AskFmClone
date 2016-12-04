@@ -26,13 +26,13 @@ urlpatterns = [
     # Auth
     url(
         r'^auth/',
-        include('askfmclone.auth.urls', namespace='auth')
+        include('apps.auth.urls', namespace='auth')
     ),
 
     # question app
     url(
         r'^question/',
-        include('askfmclone.question.urls', namespace='question')
+        include('apps.question.urls', namespace='question')
     ),
 
 
@@ -45,6 +45,6 @@ urlpatterns = [
     # askfm app
     url(
         r'^',
-        include('askfmclone.askfm.urls', namespace='askfm')
+        include('apps.askfm.urls', namespace='askfm')
     ),
 ]
