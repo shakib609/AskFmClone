@@ -99,6 +99,10 @@ def answer(request):
 
 @login_required
 def friends(request, username):
+    if request.user.username != username:
+        return redirect(
+            reverse('askfm:user_profile', args=(request.user.username, ))
+        )
     following = Follow.objects.filter(followed_by=request.user)
     context = {
         'following': following
