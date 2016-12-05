@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Friends | {{ username }} | {{ block.super }}
+{% endblock %}
+
+{% block page_content %}
+<div class="page-header text-center">
+    <h1>Your Friends</h1>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if following.count > 0 %}
+        <div class="list-group">
+            {% for follow in following %}
+            <span class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    <a href="{% url 'askfm:user_profile' follow.user.username %}">
+                        {{ follow.user.username }}
+                    </a>
+                </h4>
+            </span>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h4 class="text-center">
+            You don't have any Friends yet!
+        </h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

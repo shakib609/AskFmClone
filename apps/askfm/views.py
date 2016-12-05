@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from ..question.models import Question, Answer
+from .models import Follow
 from .forms import QuestionForm
 from .helpers import get_total_likes
 
@@ -94,3 +95,12 @@ def answer(request):
     return redirect(
         reverse('askfm:user_profile', args=(request.user.username, ))
     )
+
+
+@login_required
+def friends(request, username):
+    following = Follow.objects.filter(followed_by=request.user)
+    context = {
+        'following': following
+    }
+    return render(request, 'askfm/friends.html', context=context)

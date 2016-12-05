@@ -51,7 +51,7 @@ def registration(request):
         return redirect(
             reverse('askfm:user_profile', args=(request.user.username, ))
         )
-    next_page = request.GET.get('next')
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -69,6 +69,8 @@ def registration(request):
             djlogin(request, user)
             messages.success(
                 request, 'Your Account has been created successfully.')
+            next_page = request.GET.get('next') or reverse(
+                'askfm:user_profile', args=(request.user.username, ))
             return redirect(next_page)
     else:
         form = RegistrationForm()
