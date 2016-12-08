@@ -13,11 +13,11 @@
     <div class="col-xs-12">
         {% if following.count > 0 %}
         <div class="list-group">
-            {% for follow in following %}
+            {% for user in following %}
             <span class="list-group-item">
                 <h4 class="list-group-item-heading">
-                    <a href="{% url 'askfm:user_profile' follow.user.username %}">
-                        {{ follow.user.username }}
+                    <a href="{% url 'askfm:user_profile' user.username %}">
+                        {{ user.username }}
                     </a>
                 </h4>
             </span>

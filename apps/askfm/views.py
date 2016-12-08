@@ -103,7 +103,7 @@ def friends(request, username):
         return redirect(
             reverse('askfm:user_profile', args=(request.user.username, ))
         )
-    following = Follow.objects.filter(followed_by=request.user)
+    following = User.objects.filter(following__followed_by=request.user)
     context = {
         'following': following
     }
